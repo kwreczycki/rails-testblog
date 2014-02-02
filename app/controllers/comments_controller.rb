@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   expose_decorated(:post)
-  expose_decorated(:comment, attributes: :comment_params)
+  expose_decorated(:comment)
 
   def index
   end
