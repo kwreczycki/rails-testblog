@@ -3,6 +3,8 @@ class Post
   include Mongoid::Timestamps
   include Mongoid::Taggable
 
+  #embeds_many :comments
+
   field :body, type: String
   field :title, type: String
   field :archived, type: Boolean, default: false
@@ -10,6 +12,7 @@ class Post
   validates_presence_of :body, :title
 
   belongs_to :user
+  has_many :comments
 
   default_scope ->{ ne(archived: true) }
 

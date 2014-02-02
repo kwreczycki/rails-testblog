@@ -6,5 +6,6 @@ Easyblog::Application.routes.draw do
     member do
       post :mark_archived
     end
+    resource :comments
   end
 end
