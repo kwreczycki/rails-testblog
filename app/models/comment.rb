@@ -5,8 +5,15 @@ class Comment
   #embedded_in :post, inverse_of: :comments
 
   field :body, type: String
-  field :abusive, type: Boolean
+  field :abusive, type: Boolean, default: false
 
   belongs_to :user
   belongs_to :post
+
+  has_many :votes
+
+  def mark_as_not_abusive
+    update_attribute :abusive, false
+  end
+
 end
