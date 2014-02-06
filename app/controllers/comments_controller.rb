@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+
   expose_decorated(:post)
   expose_decorated(:comment)
 
@@ -44,8 +45,8 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 
-
   protected
+
   def create_vote(value)
     vote = comment.votes.build(
       :user => current_user.id,

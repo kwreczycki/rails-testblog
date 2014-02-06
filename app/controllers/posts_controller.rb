@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_filter :authenticate_user!
+
   expose_decorated(:posts) { Post.all }
   expose_decorated(:comments) { Comment.all } # it's only fer spec pass, i don't understand for what it's...;p
   expose_decorated(:post, attributes: :post_params)
@@ -31,7 +32,6 @@ class PostsController < ApplicationController
   end
 
   def mark_archived
-    # post = Post.find params[:id]
     post.archive!
     render action: :index
   end
