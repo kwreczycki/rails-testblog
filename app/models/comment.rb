@@ -3,12 +3,11 @@ class Comment
   include Mongoid::Timestamps
 
   #embedded_in :post, inverse_of: :comments
+  belongs_to :user
+  belongs_to :post
 
   field :body, type: String
   field :abusive, type: Boolean, default: false
-
-  belongs_to :user
-  belongs_to :post
 
   has_many :votes
 
@@ -16,4 +15,7 @@ class Comment
     update_attribute :abusive, false
   end
 
+  def mark_as_abusive
+    update_attribute :abusive, true
+  end
 end

@@ -1,19 +1,17 @@
 class Vote
   include Mongoid::Document
+  after_save :mark_comment_if_is_negative_as_abusive
 
   belongs_to :user
   belongs_to :comment
 
-  field :positive, type: Integer, default: 0
-  field :negative, type: Integer, default: 0
-
+  field :value, type: Integer, default: 0
   validates_uniqueness_of :comment, :scope => :user
 
-  def value(value)
-    if value > 0
-      self.positive = value;
-    else
-      self.negative = value;
+  def mark_comment_if_is_negative_as_abusive
+    negative = self.class.where(:value => -1, :comment => comment.id).count.to_int
+    if negative.modulo(3).zero?
+      comment.mark_as_abusive
     end
   end
 end

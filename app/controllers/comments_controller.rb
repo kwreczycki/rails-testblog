@@ -10,6 +10,8 @@ class CommentsController < ApplicationController
 
   def create
     comment = post.comments.build(comment_params)
+    comment.user_id = current_user.id
+
     if comment.save
       redirect_to controller:'posts', action: 'index'
     else
@@ -19,17 +21,23 @@ class CommentsController < ApplicationController
 
   def mark_as_not_abusive
     comment.mark_as_not_abusive
-    render action: :index
+
+    redirect_to controller:'posts', action: 'index'
   end
 
   def vote_up
-    self.create_vote(1)
-    render action: :index
+    if self.create_vote(1)
+      flash[:notice] = "Voteup !";
+    else
+      flash[:notice] = "Can't add twice vote to the same comment!"
+    end
+
+    redirect_to controller:'posts', action: 'index'
   end
 
   def vote_down
     self.create_vote(-1)
-    render action: :index
+    redirect_to controller:'posts', action: 'index'
   end
 
   def comment_params
@@ -39,10 +47,10 @@ class CommentsController < ApplicationController
 
   protected
   def create_vote(value)
-    comment = Comment.find(params[:id])
-    # logger.debug comment.votes.sum("value")
-    vote = comment.votes.build(:user => current_user.id)
-    vote.value(value);
-    vote.save
+    vote = comment.votes.build(
+      :user => current_user.id,
+      :value => value
+    )
+    return vote.save
   end
 end

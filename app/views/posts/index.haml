@@ -15,5 +15,5 @@
       .post__comment= link_to "add comment", new_post_comments_path(post),  class: 'post__button-add'
       - post.comments.each do |comment|
         .post__comment__body= comment.body
-        .post__comment__vote_up= link_to "vote up", voteup_post_comments_path(post, comment), :method => :post
-        .post__comment__vote_up= link_to "vote down", votedown_post_comments_path(post, comment), :method => :post
+        = link_to "vote up", voteup_post_comments_path(post, comment), :method => :post
+        = link_to "vote down", votedown_post_comments_path(post, comment), :method => :post
