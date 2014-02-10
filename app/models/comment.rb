@@ -18,4 +18,10 @@ class Comment
   def mark_as_abusive
     update_attribute :abusive, true
   end
+
+  def self.get_all(current_user)
+    comments = self.all
+    comments.delete_if { |comment| (comment.post.user_id != current_user.id && comment.abusive == true) }
+    return comments
+  end
 end
