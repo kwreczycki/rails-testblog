@@ -10,3 +10,12 @@
   .post__tags-list.tagsinput
     - post.tags_array.each do |tag|
       = content_tag :span, tag, class: 'tag'
+
+%h2 comments
+%ol
+  - comments.each do |comment|
+    %li.post--short-size
+      .post__title= comment.body
+      .post__created_at= comment.created_at
+      = link_to "vote up", voteup_post_comments_path(post, comment), :method => :post
+      = link_to "vote down", votedown_post_comments_path(post, comment), :method => :post

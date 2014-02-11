@@ -13,7 +13,3 @@
       .post__created_at= post.friendly_date
       .post__body= post.truncated_body
       .post__comment= link_to "add comment", new_post_comments_path(post),  class: 'post__button-add'
-      - post.comments.each do |comment|
-        .post__comment__body= comment.body
-        = link_to "vote up", voteup_post_comments_path(post, comment), :method => :post
-        = link_to "vote down", votedown_post_comments_path(post, comment), :method => :post

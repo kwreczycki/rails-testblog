@@ -2,7 +2,6 @@ class Comment
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  #embedded_in :post, inverse_of: :comments
   belongs_to :user
   belongs_to :post
 
@@ -19,9 +18,21 @@ class Comment
     update_attribute :abusive, true
   end
 
-  def self.get_all(current_user)
-    comments = self.all
-    comments.delete_if { |comment| (comment.post.user_id != current_user.id && comment.abusive == true) }
+  def self.get_all(current_user, post_id)
+    post = Post.find(post_id)
+
+    if !current_user.owner? post
+      comments = post.comments
+
+      comments.each do |comment|
+        if comment.abusive
+          comments.delete(comment)
+        end
+      end
+    else
+      comments = post.comments
+    end
+
     return comments
   end
 end
