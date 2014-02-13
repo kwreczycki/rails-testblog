@@ -6,7 +6,6 @@ class Post
   field :body, type: String
   field :title, type: String
   field :archived, type: Boolean, default: false
-  field :hotnessRank, type: Integer, default: 0
 
   validates_presence_of :body, :title
 

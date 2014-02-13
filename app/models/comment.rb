@@ -20,17 +20,23 @@ class Comment
 
   def self.get_all(current_user, post_id)
     post = Post.find(post_id)
+    comments = post.comments
 
-    if !current_user.owner? post
-      comments = post.comments
+    if comments.size >= 1
+      # this should be did better...;p
+      comments_selected = []
 
       comments.each do |comment|
-        if comment.abusive
-          comments.delete(comment)
+        if current_user.owner? post
+          comments_selected.push(comment)
+        else
+          if comment.abusive == false
+            comments_selected.push(comment)
+          end
         end
       end
-    else
-      comments = post.comments
+
+      return comments_selected
     end
 
     return comments
