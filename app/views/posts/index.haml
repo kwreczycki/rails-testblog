@@ -12,4 +12,5 @@
       .post__title= link_to post.title, post_path(post)
       .post__created_at= post.friendly_date
       .post__body= post.truncated_body
-      .post__comment= link_to "delete post", post_path(post), :method => :delete
+      - if current_user.owner? post
+        .post__comment= link_to "delete post", post_path(post), :method => :delete

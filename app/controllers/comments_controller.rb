@@ -23,22 +23,27 @@ class CommentsController < ApplicationController
   def mark_as_not_abusive
     comment.mark_as_not_abusive
 
-    redirect_to controller:'posts', action: 'index'
+    redirect_to post
   end
 
   def vote_up
     if self.create_vote(1)
-      flash[:notice] = "Voteup !";
+      flash[:notice] = "Your vote was saved !";
     else
-      flash[:notice] = "Can't add twice vote to the same comment!"
+      flash[:notice] = "Can't vote twice for the same comment!"
     end
 
-    redirect_to controller:'posts', action: 'index'
+    redirect_to post
   end
 
   def vote_down
-    self.create_vote(-1)
-    redirect_to controller:'posts', action: 'index'
+    if self.create_vote(-1)
+      flash[:notice] = "Your vote was saved !";
+    else
+      flash[:notice] = "Can't vote twice for the same comment!"
+    end
+
+    redirect_to post
   end
 
   def comment_params

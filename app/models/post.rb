@@ -31,4 +31,10 @@ class Post
       return 0
     end
   end
+
+  def self.get_all
+    posts = self.all
+    # posts.sort! { |a,b| a.hotness <=> b.hotness }
+    return posts
+  end
 end
