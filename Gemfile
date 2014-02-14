@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "1.9.3"
+ruby '1.9.3'
 gem 'rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'mongoid'
@@ -18,6 +18,7 @@ gem 'flatui-rails', github: 'pkurek/flatui-rails'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
+gem 'bundler'
 
 group :development do
   gem 'html2haml'
