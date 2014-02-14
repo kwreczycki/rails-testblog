@@ -23,7 +23,6 @@ class Comment
     comments = post.comments
 
     if comments.size >= 1
-      # this should be did better...;p
       comments_selected = []
 
       comments.each do |comment|
